@@ -4,7 +4,22 @@
 #include <QPixmap>
 #include <QKeyEvent>
 #include <QDebug>
+
+//代码中引入头文件
+#if (QT_VERSION >= QT_VERSION_CHECK(5,0,0))
+#include <QtWidgets>
+#endif
+#if (QT_VERSION >= QT_VERSION_CHECK(6,0,0))
+#include <QtCore5Compat>
+#include <QCamera>
+#include <QCameraDevice>
+#include <QMediaDevices>
+#endif
+
+#if (QT_VERSION < QT_VERSION_CHECK(6,0,0))
 #include <QCameraInfo>
+#endif
+
 #include <QGridLayout>
 #include <QIcon>
 #include <QStandardItem>
@@ -116,6 +131,7 @@ void MainWindow::createActions()
 
 void MainWindow::showCameraInfo()
 {
+#if (QT_VERSION < QT_VERSION_CHECK(6,0,0))
     QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     QString info = QString("Available Cameras: \n");
 
@@ -123,6 +139,11 @@ void MainWindow::showCameraInfo()
         info += "  - " + cameraInfo.deviceName() + "\n";
 
     QMessageBox::information(this, "Cameras", info);
+#else
+    QMediaDevices devices;
+    connect(&devices, &QMediaDevices::audioInputsChanged,
+            []() { qDebug() << "available audio inputs have changed"; });
+#endif
 }
 
 
@@ -167,7 +188,10 @@ void MainWindow::updateFrame(cv::Mat *mat)
     QPixmap image = QPixmap::fromImage(frame);
 
     imageScene->clear();
-    imageView->resetMatrix();
+
+//    imageView->resetMatrix();
+    imageView->resetTransform();
+
     imageScene->addPixmap(image);
     imageScene->update();
     imageView->setSceneRect(image.rect());

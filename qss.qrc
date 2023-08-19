@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qss/blackblue.css</file>
+        <file>qss/blacksoft.css</file>
+        <file>qss/blackvideo.css</file>
+        <file>qss/darkblack.css</file>
+        <file>qss/darkblue.css</file>
+        <file>qss/darkgray.css</file>
+        <file>qss/flatblack.css</file>
+        <file>qss/flatblue.css</file>
+        <file>qss/flatgray.css</file>
+        <file>qss/lightblack.css</file>
+        <file>qss/lightblue.css</file>
+        <file>qss/lightgray.css</file>
+        <file>qss/normalblack.css</file>
+        <file>qss/normalblue.css</file>
+        <file>qss/normalgray.css</file>
+        <file>qss/otherblue.css</file>
+        <file>qss/otherpurple.css</file>
+        <file>qss/othersilvery.css</file>
+    </qresource>
+</RCC>

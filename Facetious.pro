@@ -1,129 +1,154 @@
 TEMPLATE = app
 TARGET = Facetious
 INCLUDEPATH += .
+INCLUDEPATH += ./app
 
 QT += core gui multimedia
+//pro文件引入模块
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 5): QT += core5compat
 
 # Input
-HEADERS += mainwindow.h capture_thread.h utilities.h
-SOURCES += main.cpp mainwindow.cpp capture_thread.cpp utilities.cpp
+HEADERS += mainwindow.h capture_thread.h utilities.h \
+    app/flatui.h \
+    app/quiconfig.h \
+    app/quistyle.h
+SOURCES += main.cpp mainwindow.cpp capture_thread.cpp utilities.cpp \
+    app/flatui.cpp \
+    app/quiconfig.cpp \
+    app/quistyle.cpp
 
-# DEFINES += OPENCV_DATA_DIR=\\\"/usr/share/opencv/\\\"
-#DEFINES += OPENCV_DATA_DIR=\\\"/home/kdr2/programs/opencv/share/opencv4/\\\"
+RESOURCES = images.qrc \
+    qss.qrc
 
+# 设置可执行文件输出路径
+win32:CONFIG(release, debug|release): {
+# exe文件生成路径，默认采用工程下路径，这样可无需重复拷贝给力dll库文件和配置文件等
+DESTDIR = ../FastCvLearn/install/bin/release
+}
+else:win32:CONFIG(debug, debug|release): {
+# exe文件生成路径，默认采用工程下路径，这样可无需重复拷贝给力dll库文件和配置文件等
+DESTDIR = ../FastCvLearn/install/bin/debug
+}
 
-RESOURCES = images.qrc
-
+exeInstallOut.path = $$DESTDIR
+INSTALLS += exeInstallOut
 
 # opencv config
-INCLUDEPATH += C:/opencv451/include
-DEPENDPATH += C:/opencv451/include
 
-win32:CONFIG(release, debug|release): LIBS += -LC:/opencv451/vc15/lib/ \
-opencv_aruco451.lib  \
-opencv_bgsegm451.lib  \
-opencv_bioinspired451.lib  \
-opencv_ccalib451.lib  \
-opencv_core451.lib  \
-opencv_cudaarithm451.lib  \
-opencv_cudabgsegm451.lib  \
-opencv_cudacodec451.lib  \
-opencv_cudafilters451.lib  \
-opencv_cudaimgproc451.lib  \
-opencv_cudalegacy451.lib  \
-opencv_cudaobjdetect451.lib  \
-opencv_cudaoptflow451.lib  \
-opencv_cudastereo451.lib  \
-opencv_cudawarping451.lib  \
-opencv_cudev451.lib  \
-opencv_cvv451.lib  \
-opencv_datasets451.lib  \
-opencv_dnn451.lib  \
-opencv_dpm451.lib  \
-opencv_face451.lib  \
-opencv_flann451.lib  \
-opencv_fuzzy451.lib  \
-opencv_gapi451.lib  \
-opencv_hfs451.lib  \
-opencv_highgui451.lib  \
-opencv_imgcodecs451.lib  \
-opencv_imgproc451.lib  \
-opencv_mcc451.lib  \
-opencv_ml451.lib  \
-opencv_objdetect451.lib  \
-opencv_optflow451.lib  \
-opencv_photo451.lib  \
-opencv_plot451.lib  \
-opencv_quality451.lib  \
-opencv_rapid451.lib  \
-opencv_reg451.lib  \
-opencv_rgbd451.lib  \
-opencv_saliency451.lib  \
-opencv_shape451.lib  \
-opencv_stereo451.lib  \
-opencv_stitching451.lib  \
-opencv_superres451.lib  \
-opencv_text451.lib  \
-opencv_tracking451.lib  \
-opencv_video451.lib  \
-opencv_videoio451.lib  \
-opencv_videostab451.lib  \
-opencv_ximgproc451.lib  \
-opencv_xobjdetect451.lib  \
-opencv_xphoto451.lib
-else:win32:CONFIG(debug, debug|release): LIBS += -LC:/opencv451/vc15/lib/  \
-opencv_aruco451d.lib  \
-opencv_bgsegm451d.lib  \
-opencv_bioinspired451d.lib  \
-opencv_ccalib451d.lib  \
-opencv_core451d.lib  \
-opencv_cudaarithm451d.lib  \
-opencv_cudabgsegm451d.lib  \
-opencv_cudacodec451d.lib  \
-opencv_cudafilters451d.lib  \
-opencv_cudaimgproc451d.lib  \
-opencv_cudalegacy451d.lib  \
-opencv_cudaobjdetect451d.lib  \
-opencv_cudaoptflow451d.lib  \
-opencv_cudastereo451d.lib  \
-opencv_cudawarping451d.lib  \
-opencv_cudev451d.lib  \
-opencv_cvv451d.lib  \
-opencv_datasets451d.lib  \
-opencv_dnn451d.lib  \
-opencv_dpm451d.lib  \
-opencv_face451d.lib  \
-opencv_flann451d.lib  \
-opencv_fuzzy451d.lib  \
-opencv_gapi451d.lib  \
-opencv_hfs451d.lib  \
-opencv_highgui451d.lib  \
-opencv_imgcodecs451d.lib  \
-opencv_imgproc451d.lib  \
-opencv_mcc451d.lib  \
-opencv_ml451d.lib  \
-opencv_objdetect451d.lib  \
-opencv_optflow451d.lib  \
-opencv_photo451d.lib  \
-opencv_plot451d.lib  \
-opencv_quality451d.lib  \
-opencv_rapid451d.lib  \
-opencv_reg451d.lib  \
-opencv_rgbd451d.lib  \
-opencv_saliency451d.lib  \
-opencv_shape451d.lib  \
-opencv_stereo451d.lib  \
-opencv_stitching451d.lib  \
-opencv_superres451d.lib  \
-opencv_text451d.lib  \
-opencv_tracking451d.lib  \
-opencv_video451d.lib  \
-opencv_videoio451d.lib  \
-opencv_videostab451d.lib  \
-opencv_ximgproc451d.lib  \
-opencv_xobjdetect451d.lib  \
-opencv_xphoto451d.lib
-else:unix:!macx: LIBS += -LC:/opencv451/vc15/lib/ -lopencv_core451 \
--lopencv_*451
+# DEFINES += OPENCV_DATA_DIR=\\\"/usr/share/opencv/\\\"
+#DEFINES += OPENCV_DIR=\\\"D:/Work/C++/qt6Work/install/opencv460/\\\"
+
+INCLUDEPATH += D:/Work/C++/qt6Work/install/opencv460/include/ \
+               D:/Work/C++/qt6Work/install/opencv460/include/opencv2/
+
+DEPENDPATH += D:/Work/C++/qt6Work/install/opencv460/include/ \
+              D:/Work/C++/qt6Work/install/opencv460/include/opencv2/
+
+win32:CONFIG(release, debug|release): LIBS += -LD:/Work/C++/qt6Work/install/opencv460/x64/vc16/lib/ \
+opencv_aruco460.lib  \
+opencv_bgsegm460.lib  \
+opencv_bioinspired460.lib  \
+opencv_ccalib460.lib  \
+opencv_core460.lib  \
+#opencv_cudaarithm460.lib  \
+#opencv_cudabgsegm460.lib  \
+#opencv_cudacodec460.lib  \
+#opencv_cudafilters460.lib  \
+#opencv_cudaimgproc460.lib  \
+#opencv_cudalegacy460.lib  \
+#opencv_cudaobjdetect460.lib  \
+#opencv_cudaoptflow460.lib  \
+#opencv_cudastereo460.lib  \
+#opencv_cudawarping460.lib  \
+#opencv_cudev460.lib  \
+#opencv_cvv460.lib  \
+opencv_datasets460.lib  \
+opencv_dnn460.lib  \
+opencv_dpm460.lib  \
+opencv_face460.lib  \
+opencv_flann460.lib  \
+opencv_fuzzy460.lib  \
+opencv_gapi460.lib  \
+opencv_hfs460.lib  \
+opencv_highgui460.lib  \
+opencv_imgcodecs460.lib  \
+opencv_imgproc460.lib  \
+opencv_mcc460.lib  \
+opencv_ml460.lib  \
+opencv_objdetect460.lib  \
+opencv_optflow460.lib  \
+opencv_photo460.lib  \
+opencv_plot460.lib  \
+opencv_quality460.lib  \
+opencv_rapid460.lib  \
+opencv_reg460.lib  \
+opencv_rgbd460.lib  \
+opencv_saliency460.lib  \
+opencv_shape460.lib  \
+opencv_stereo460.lib  \
+opencv_stitching460.lib  \
+opencv_superres460.lib  \
+opencv_text460.lib  \
+opencv_tracking460.lib  \
+opencv_video460.lib  \
+opencv_videoio460.lib  \
+opencv_videostab460.lib  \
+opencv_ximgproc460.lib  \
+opencv_xobjdetect460.lib  \
+opencv_xphoto460.lib
+else:win32:CONFIG(debug, debug|release): LIBS += -LD:/Work/C++/qt6Work/install/opencv460/x64/vc16/lib/  \
+opencv_aruco460d.lib  \
+opencv_bgsegm460d.lib  \
+opencv_bioinspired460d.lib  \
+opencv_ccalib460d.lib  \
+opencv_core460d.lib  \
+#opencv_cudaarithm460d.lib  \
+#opencv_cudabgsegm460d.lib  \
+#opencv_cudacodec460d.lib  \
+#opencv_cudafilters460d.lib  \
+#opencv_cudaimgproc460d.lib  \
+#opencv_cudalegacy460d.lib  \
+#opencv_cudaobjdetect460d.lib  \
+#opencv_cudaoptflow460d.lib  \
+#opencv_cudastereo460d.lib  \
+#opencv_cudawarping460d.lib  \
+#opencv_cudev460d.lib  \
+#opencv_cvv460d.lib  \
+opencv_datasets460d.lib  \
+opencv_dnn460d.lib  \
+opencv_dpm460d.lib  \
+opencv_face460d.lib  \
+opencv_flann460d.lib  \
+opencv_fuzzy460d.lib  \
+opencv_gapi460d.lib  \
+opencv_hfs460d.lib  \
+opencv_highgui460d.lib  \
+opencv_imgcodecs460d.lib  \
+opencv_imgproc460d.lib  \
+opencv_mcc460d.lib  \
+opencv_ml460d.lib  \
+opencv_objdetect460d.lib  \
+opencv_optflow460d.lib  \
+opencv_photo460d.lib  \
+opencv_plot460d.lib  \
+opencv_quality460d.lib  \
+opencv_rapid460d.lib  \
+opencv_reg460d.lib  \
+opencv_rgbd460d.lib  \
+opencv_saliency460d.lib  \
+opencv_shape460d.lib  \
+opencv_stereo460d.lib  \
+opencv_stitching460d.lib  \
+opencv_superres460d.lib  \
+opencv_text460d.lib  \
+opencv_tracking460d.lib  \
+opencv_video460d.lib  \
+opencv_videoio460d.lib  \
+opencv_videostab460d.lib  \
+opencv_ximgproc460d.lib  \
+opencv_xobjdetect460d.lib  \
+opencv_xphoto460d.lib
+else:unix:!macx: LIBS += -LD:/Work/C++/qt6Work/install/opencv460/x64/vc16/lib/ -lopencv_core460 \
+-lopencv_*460
 
