@@ -1,4 +1,4 @@
-#include <QApplication>
+﻿#include <QApplication>
 #include <QImage>
 #include <QTime>
 #include <QDebug>
@@ -38,11 +38,8 @@ void CaptureThread::run() {
     frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 
-//    classifier = new cv::CascadeClassifier(OPENCV_DATA_DIR /*+*/ "haarcascades/haarcascade_frontalface_default.xml");
-//    const cv::String classifier_data =  "D:/work/qtProject/opencvQT/Qt-5-and-OpenCV-4-Computer-Vision-Projects/Chapter-04/Facetious/haarcascades/haarcascade_frontalface_default.xml";
     //classifier_data必须是const cv::String
     const cv::String classifier_data = "haarcascades/haarcascade_frontalface_default.xml";
-//   QString  classifier_data = "haarcascades/haarcascade_frontalface_default.xml".toStdString();
     classifier = new cv::CascadeClassifier(classifier_data);
 
     mark_detector = cv::face::createFacemarkLBF();
@@ -57,14 +54,9 @@ void CaptureThread::run() {
 
         if(masks_flag > 0)
             detectFaces(tmp_frame);
-#ifdef USERDEBUG
-{
-//        qDebug()<<"run()--->taking_photo"<<taking_photo;
-}
-#endif
+
         if(taking_photo) {
             takePhoto(tmp_frame);
-
 
 #ifdef USERDEBUG
 {
@@ -75,7 +67,6 @@ void CaptureThread::run() {
             qDebug()<<"run()--->tmp_frame exists data!";
 }
 #endif
-
         }
 
         cvtColor(tmp_frame, tmp_frame, cv::COLOR_BGR2RGB);
